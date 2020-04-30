@@ -41,6 +41,6 @@ export const shiftCharacter  = (char: string, shift: number): string => {
         }
     }
     else {
-        throw new Error('Unable to shift char');
+        throw new Error('Unable to encode');
     }
 }

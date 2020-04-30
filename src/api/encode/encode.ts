@@ -1,8 +1,9 @@
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
-import * as _ from 'lodash';
 
-import * as service from '../service/shift-cipher';
+import { EncodePostRequest, EncodePostResponse } from './encode.interface';
+
+import * as service from '../../services/shift-cipher';
 
 const encode = new Router();
 
@@ -17,8 +18,8 @@ encode.post( '/',
         }
         await next();
     },
-        async (ctx: Koa.Context, next: () => Promise<any>) => {
-        const { Shift, Message } = ctx.request.body;
+        async (ctx: Koa.Context, next: () => Promise<EncodePostResponse>) => {
+        const { Shift, Message }: EncodePostRequest = ctx.request.body;
         try {
             const encodedMessage = service.shiftMessage(Message, Shift);
             ctx.body = { EncodedMessage: encodedMessage };

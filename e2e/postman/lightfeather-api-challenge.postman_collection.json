@@ -306,6 +306,54 @@
 			"response": []
 		},
 		{
+			"name": "Preserve casing",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ebd7375-a67a-4175-8ae6-3eddd04386f2",
+						"exec": [
+							"pm.test(\"Encode message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.EncodedMessage).to.eql(\"gDg\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Shift\": 3,\n\t\"Message\": \"dAd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:23456/api/encode",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "23456",
+					"path": [
+						"api",
+						"encode"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Retain space",
 			"event": [
 				{

@@ -1,4 +1,4 @@
-import * as service from '../../src/service/shift-cipher';
+import * as service from '../../src/services/shift-cipher';
 import * as fs from 'fs';
 
 describe("shift-cipher Service", () => {

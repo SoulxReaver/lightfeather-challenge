@@ -1,5 +1,5 @@
 import * as Router from 'koa-router';
-import encode from './encode';
+import encode from './encode/encode';
 
 const api = new Router();
 
