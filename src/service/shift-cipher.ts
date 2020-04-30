@@ -1,14 +1,27 @@
 import * as _ from 'lodash';
+import * as fs from 'fs';
+import { v4 as uuidv4 } from 'uuid';
 
-export const shiftMessage = (str, shift): String => {
+export const saveTodisk = (content: string) => {
+    var dir = './result';
+
+    if (!fs.existsSync(dir)){
+        fs.mkdirSync(dir);
+    }
+
+    fs.writeFileSync(`result/${uuidv4()}.txt`, content);
+}
+
+export const shiftMessage = (str: string, shift: number): string => {
     let ans = "";
     for (let i = 0; i < str.length; i++) {
         ans += shiftCharacter(str[i], shift);
     }
+    saveTodisk(ans);
     return ans;
 }
 
-export const shiftCharacter  = (char, shift): String => {
+export const shiftCharacter  = (char: string, shift: number): string => {
     const alphabet = /[a-z]/i;
 
     if (!char.match(alphabet)) {

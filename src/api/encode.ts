@@ -2,13 +2,9 @@ import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import * as _ from 'lodash';
 
-const encode = new Router();
+import * as service from '../service/shift-cipher';
 
-// TODO: Remove me
-encode.get( '/', async (ctx: Koa.Context, next: () => Promise<any>) => {
-    ctx.body = { message: "This is your GET route" };
-    await next();
-});
+const encode = new Router();
 
 encode.post( '/', 
     async (ctx: Koa.Context, next: () => Promise<any>) => {
@@ -22,8 +18,18 @@ encode.post( '/',
         await next();
     },
         async (ctx: Koa.Context, next: () => Promise<any>) => {
+        const { Shift, Message } = ctx.body;
+        try {
+            const encodedMessage = service.shiftMessage(Message, Shift);
+            ctx.body = { EncodedMessage: encodedMessage };
+            ctx.status = 200;
+        }
+        catch (e) {
+            ctx.body = { EncodedMessage: "" };
+            ctx.status = 500;
+            console.log( `Unable to encode message: [Message] Shift: [Shift]` )
+        }
         
-        ctx.body = { message: "This is your POST route, attached you can find the data you sent", body: ctx.request.body };
         await next();
     }
 );
