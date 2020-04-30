@@ -27,7 +27,7 @@ encode.post( '/',
         catch (e) {
             ctx.body = { EncodedMessage: "" };
             ctx.status = 500;
-            console.log( `Unable to encode message: [Message] Shift: [Shift]` )
+            console.log( `Unable to encode message: [${Message}] Shift: [${Shift}]` )
         }
         
         await next();

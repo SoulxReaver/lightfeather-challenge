@@ -1,0 +1,406 @@
+{
+	"info": {
+		"_postman_id": "3a176bf3-7ad8-40dc-a843-e78ae6116251",
+		"name": "lightfeather-api-challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Invalid Shift Input",
+			"item": [
+				{
+					"name": "Shift is Required",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e52f975e-3b5d-4911-b775-b378a28be6e7",
+								"exec": [
+									"pm.test(\"Shift is required\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[0].Shift).to.eql(\"Shift can not be empty.\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Message\": \"hjkjhjkzk\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:23456/api/encode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "23456",
+							"path": [
+								"api",
+								"encode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Shift is an Integer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e358ac07-4ec1-4ffa-846c-9eff87edc654",
+								"exec": [
+									"pm.test(\"Shift is an integer\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[0].Shift).to.eql(\"Shift is not integer.\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Shift\": \"a\",\n\t\"Message\": \"hjkjhjkzk\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:23456/api/encode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "23456",
+							"path": [
+								"api",
+								"encode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Shift is non negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e3416c2f-44ce-4a33-bc33-5459d31cb3a4",
+								"exec": [
+									"pm.test(\"Shift is a non negative integer\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[0].Shift).to.eql(\"Shift must great than or equal 0.\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Shift\": -5,\n\t\"Message\": \"hjkjhjkzk\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:23456/api/encode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "23456",
+							"path": [
+								"api",
+								"encode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Shift is equal or greater than 26",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0c2b9403-360e-4d36-bd7c-b46a018f710a",
+								"exec": [
+									"pm.test(\"Shift is less or equal to 26\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[0].Shift).to.eql(\"Shift must less than or equal 26.\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Shift\": 27,\n\t\"Message\": \"hjkjhjkzk\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:23456/api/encode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "23456",
+							"path": [
+								"api",
+								"encode"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Invalid Message Input",
+			"item": [
+				{
+					"name": "Message is requried",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "064baab6-f09a-40cd-8fd3-a7d4d4771236",
+								"exec": [
+									"pm.test(\"Missing Message property\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[0].Message).to.eql(\"Message can not be empty.\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Shift\": 26\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:23456/api/encode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "23456",
+							"path": [
+								"api",
+								"encode"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Shift message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c526ee9a-4062-4ebe-9a91-97a516988ac3",
+						"exec": [
+							"pm.test(\"Encode message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.EncodedMessage).to.eql(\"gdg\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Shift\": 3,\n\t\"Message\": \"dad\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:23456/api/encode",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "23456",
+					"path": [
+						"api",
+						"encode"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retain space",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e60e82f4-c44c-4965-a856-6341dc4d6041",
+						"exec": [
+							"pm.test(\"Retain space\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.EncodedMessage).to.eql(\"jgnnq yqtnf\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Shift\": 2,\n\t\"Message\": \"hello world\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:23456/api/encode",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "23456",
+					"path": [
+						"api",
+						"encode"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unable to encode",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "84a7e0c4-c3f7-469e-b53d-176fcd61f6e9",
+						"exec": [
+							"pm.test(\"Unable to encode\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.EncodedMessage).to.eql(\"\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Shift\": 20,\n\t\"Message\": \"hello world\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:23456/api/encode",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "23456",
+					"path": [
+						"api",
+						"encode"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

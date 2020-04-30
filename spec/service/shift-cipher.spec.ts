@@ -43,6 +43,8 @@ describe("shift-cipher Service", () => {
     it("Should shift message", function() {
       const actual = service.shiftMessage('dad', 3);
       expect(actual).toBe('gdg');
+      expect(fs.existsSync).toHaveBeenCalled();
+      expect(fs.writeFileSync).toHaveBeenCalled();
     });
 
     it("Should retain space", function() {
