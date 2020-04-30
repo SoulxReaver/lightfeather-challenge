@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "test": "jasmine-ts \"spec/**/*.spec.ts\"",
+    "start": "ts-node server/src/index.ts",
+    "test": "jasmine-ts --config=server/spec/support/jasmine.json \"server/spec/**/*.spec.ts\"",
     "clean": "rm -rf result"
   },
   "author": "alextong0628@gmail.com",
@@ -31,6 +31,7 @@
     "@types/koa-logger": "^3.1.1",
     "@types/koa-router": "^7.4.0",
     "@types/lodash": "^4.14.150",
+    "@types/uuid": "^7.0.3",
     "del": "^5.1.0",
     "jasmine": "^3.5.0",
     "jasmine-spec-reporter": "^5.0.2",

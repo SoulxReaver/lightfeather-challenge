@@ -31,7 +31,7 @@ Run `npm test` to execute the unit tests via [Jasmine](https://jasmine.github.io
 
 ## End to End Test
 
-There is a postman test case collection located in the "e2e/postman" folder
+There is a postman test case collection located in the "server/e2e/postman" folder
 
 Import the file with the Postman
 

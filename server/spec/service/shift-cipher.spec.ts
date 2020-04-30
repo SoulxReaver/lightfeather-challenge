@@ -29,8 +29,8 @@ describe("shift-cipher Service", () => {
     });
 
     it("Should throw when character is not in the alphabet", function() {
-      expect( () => service.shiftCharacter('a', 27) ).toThrow(new Error('Unable to shift char'));
-      expect( () => service.shiftCharacter('A', 27) ).toThrow(new Error('Unable to shift char'));
+      expect( () => service.shiftCharacter('a', 27) ).toThrow(new Error('Unable to encode character'));
+      expect( () => service.shiftCharacter('A', 27) ).toThrow(new Error('Unable to encode character'));
     });
   });
   
