@@ -8,7 +8,7 @@ const encode = new Router();
 
 encode.post( '/', 
     async (ctx: Koa.Context, next: () => Promise<any>) => {
-        ctx.checkBody('Shift').notEmpty().isInt();
+        ctx.checkBody('Shift').notEmpty().isInt().ge(0).le(26);
         ctx.checkBody('Message').notEmpty();
         if (ctx.errors) {
             ctx.status = 400;
@@ -18,7 +18,7 @@ encode.post( '/',
         await next();
     },
         async (ctx: Koa.Context, next: () => Promise<any>) => {
-        const { Shift, Message } = ctx.body;
+        const { Shift, Message } = ctx.request.body;
         try {
             const encodedMessage = service.shiftMessage(Message, Shift);
             ctx.body = { EncodedMessage: encodedMessage };

@@ -1,4 +1,5 @@
 import * as service from '../../src/service/shift-cipher';
+import * as fs from 'fs';
 
 describe("shift-cipher Service", () => {
   describe("shiftChar", () => {
@@ -18,21 +19,27 @@ describe("shift-cipher Service", () => {
     });
 
     it("Should return empty when character is null", function() {
-      const actual = service.shiftCharacter('', 2);
-      expect(actual).toBe('');
+      const actual = service.shiftCharacter(null, 2);
+      expect(actual).toBe(null);
     });
 
     it("Should return empty when character is undefined", function() {
-      const actual = service.shiftCharacter('', 2);
-      expect(actual).toBe('');
+      const actual = service.shiftCharacter(undefined, 2);
+      expect(actual).toBe(undefined);
     });
 
     it("Should throw when character is not in the alphabet", function() {
-      expect( () => service.shiftCharacter('a', 300) ).toThrow(new Error('unable to shift char'));
+      expect( () => service.shiftCharacter('a', 27) ).toThrow(new Error('Unable to shift char'));
+      expect( () => service.shiftCharacter('A', 27) ).toThrow(new Error('Unable to shift char'));
     });
   });
   
   describe("shiftMessage", () => {
+    beforeEach( () => {
+      spyOn(fs, 'existsSync').and.returnValue(true);
+      spyOn(fs, 'writeFileSync')
+    });
+
     it("Should shift message", function() {
       const actual = service.shiftMessage('dad', 3);
       expect(actual).toBe('gdg');

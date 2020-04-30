@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 
 export const saveTodisk = (content: string) => {
-    var dir = './result';
+    const dir = './result';
 
     if (!fs.existsSync(dir)){
         fs.mkdirSync(dir);
@@ -24,16 +24,23 @@ export const shiftMessage = (str: string, shift: number): string => {
 export const shiftCharacter  = (char: string, shift: number): string => {
     const alphabet = /[a-z]/i;
 
-    if (!char.match(alphabet)) {
+    if (_.isEmpty(char) || !char.match(alphabet)) {
         return char;
     }
-    const charCode = char.charCodeAt(0);
+
+    const lowerCaseChar = char.toLowerCase();
+    const charCode = lowerCaseChar.charCodeAt(0);
     const shiftedChar = String.fromCharCode(charCode + shift);
 
     if (shiftedChar.match(alphabet)) {
-        return String.fromCharCode(charCode + shift);
+        if (lowerCaseChar === char) {
+            return shiftedChar;
+        }
+        else {
+            return shiftedChar.toUpperCase();
+        }
     }
     else {
-        throw new Error('unable to shift char');
+        throw new Error('Unable to shift char');
     }
 }
