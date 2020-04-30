@@ -47,6 +47,13 @@ describe("shift-cipher Service", () => {
       expect(fs.writeFileSync).toHaveBeenCalled();
     });
 
+    it("Should preserve casing", function() {
+      const actual = service.shiftMessage('dAd', 3);
+      expect(actual).toBe('gDg');
+      expect(fs.existsSync).toHaveBeenCalled();
+      expect(fs.writeFileSync).toHaveBeenCalled();
+    });
+
     it("Should retain space", function() {
       const actual = service.shiftMessage('the eagle has landed', 2);
       expect(actual).toBe('vjg gcing jcu ncpfgf');
