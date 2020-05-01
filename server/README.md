@@ -6,7 +6,7 @@ This web server will provide the user with the ability to encode messages with a
 
 ## Requirement
 
-* Node.js version 12.13.1 or later
+* Node.js version 12.13.1
 
 ## Setup
 
