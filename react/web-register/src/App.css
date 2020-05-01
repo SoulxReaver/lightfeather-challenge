@@ -1,0 +1,19 @@
+.app-container {
+  width: 800px;
+}
+
+.forum-title {
+  text-align: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: black;
+}
+
+.MuiTextField-root {
+  width: 300px!important;
+}
