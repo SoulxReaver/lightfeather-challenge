@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node server/src/index.ts",
-    "test": "jasmine-ts --config=server/spec/support/jasmine.json \"server/spec/**/*.spec.ts\"",
+    "start": "ts-node src/index.ts",
+    "test": "jasmine-ts \"spec/**/*.spec.ts\"",
     "clean": "rm -rf result"
   },
   "author": "alextong0628@gmail.com",
