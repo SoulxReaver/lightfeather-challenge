@@ -77,7 +77,7 @@ const App = () => {
         Create your account
       </h1>
         <form className="form-container"  autoComplete="off">
-          <Box mt={1}>
+          <Box mt={3}>
             <TextField
               id="username" 
               data-testid="username"
@@ -89,7 +89,7 @@ const App = () => {
               helperText={username.errorMessage}
             />
           </Box>
-          <Box mt={1}>
+          <Box mt={3}>
             <TextField 
               id="email" 
               data-testid="email"
@@ -100,7 +100,7 @@ const App = () => {
               onBlur={validateEmail}
               helperText={email.errorMessage} />
           </Box>
-          <Box mt={1}>
+          <Box mt={3}>
             <TextField 
               id="password" 
               data-testid="password"
@@ -111,7 +111,7 @@ const App = () => {
               onBlur={validatePassword}
               helperText={password.errorMessage} />
           </Box>
-          <Box mt={1}>
+          <Box mt={3}>
             <TextField 
               id="confirm-password" 
               data-testid="confirm-password"
@@ -122,7 +122,7 @@ const App = () => {
               onBlur={validateConfirmPassword} 
               helperText={confirmPassword.errorMessage}/>
           </Box>
-          <Box mt={1}>
+          <Box mt={3}>
             <Button variant="contained" data-testid="submit" color="primary" disabled={disableSubmit}>Create account</Button>
           </Box>
         </form>
