@@ -48,6 +48,10 @@ Launches the test runner
 
 See the section about [Jasmine](https://jasmine.github.io/setup/nodejs.html) for more information.
 
+### 'npm run clean'
+
+Delete result directory
+
 ## End to End Test
 
 There is a postman test case collection located in the "e2e/postman" folder
