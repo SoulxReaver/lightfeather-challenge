@@ -12,28 +12,47 @@ This web server will provide the user with the ability to encode messages with a
 
 ### Step 1
 
-* Install Node.js version 12.13.1 or later
++ Install Node.js version 12.13.1
+
   + To check you version run `node -v` on the terminal
-  + Link to latest Nodejs: https://nodejs.org/en/
+
+  + Link to latest [Nodejs](https://nodejs.org/en/)
 
 ### Step 2
 
 + Navigate to the project directory
-+ Install all the required node package run `npm i`
 
-## Development Server
+  + ```cd server```
 
-Run `npm start` for a dev server. Navigate to `http://localhost:23456/`. 
++ Install all the required node package
+  
+  + run `npm i` on the ternimal
 
-## Running Unit Tests
+## Available Scripts
 
-Run `npm test` to execute the unit tests via [Jasmine](https://jasmine.github.io/setup/nodejs.html)
+In the project directory, you can run:
+
+### `npm start`
+
+Runs the app in the development mode.
+
+Open [http://localhost:23456](http://localhost:23456) to view it in the browser.
+
+The page will reload if you make edits.
+
+You will also see any lint errors in the console.
+
+### `npm test`
+
+Launches the test runner
+
+See the section about [Jasmine](https://jasmine.github.io/setup/nodejs.html) for more information.
 
 ## End to End Test
 
-There is a postman test case collection located in the "server/e2e/postman" folder
+There is a postman test case collection located in the "e2e/postman" folder
 
-Import the file with the Postman
+See the section about [Postman](https://learning.postman.com/docs/postman/collection-runs/working-with-data-files/) for more information.
 
 ## Notes
 
