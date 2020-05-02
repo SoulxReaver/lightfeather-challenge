@@ -16,6 +16,14 @@ This repository contains two Projects.
 
 * Node.js version 12.13.1
 
+## Technology Stack
+
+* react
+
+* nodejs
+
+  * koa
+
 ## Notes
 
 I have decouple the front-end and the back-end. This allow the flexiblity of deploying the code to different servers.
