@@ -4,11 +4,11 @@
 
 This repository contains two Projects. 
 
-+ Web Compoent 
++ web-register 
 
   + This web component is a signup page.
 
-+ Server
++ server
 
   + This web server will provide the user with the ability to encode messages with a shift cipher.
 
@@ -26,6 +26,6 @@ This repository contains two Projects.
 
 ## Notes
 
-I have decouple the front-end and the back-end. This allow the flexiblity of deploying the code to different servers.
+I have decouple the front-end and the back-end. This allow the flexiblity of deploying the code to different servers. This also allows developer to fully benefit from using react-script.
 
 Navigate to each folder for an additional Readme file to get started.
