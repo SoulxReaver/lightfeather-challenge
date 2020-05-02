@@ -24,10 +24,14 @@ export const shiftMessage = (str: string, shift: number): string => {
 export const shiftCharacter  = (char: string, shift: number): string => {
     const alphabet = /[a-z]/i;
 
-    if (_.isEmpty(char) || !char.match(alphabet)) {
+    if (_.isEmpty(char) || char === ' ') {
         return char;
     }
 
+    if (!char.match(alphabet)) {
+        throw new Error('Unable to encode character');
+    }
+    
     const lowerCaseChar = char.toLowerCase();
     const charCode = lowerCaseChar.charCodeAt(0);
     const shiftedChar = String.fromCharCode(charCode + shift);

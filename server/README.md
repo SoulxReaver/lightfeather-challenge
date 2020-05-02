@@ -54,12 +54,14 @@ There is a postman test case collection located in the "e2e/postman" folder
 
 See the section about [Postman](https://learning.postman.com/docs/postman/collection-runs/working-with-data-files/) for more information.
 
+*Application must be running in order to execute test on postman*
+
 ## Notes
 
 Requirerd payload in JSON format:
 
 + Shift
-    + required
+    + Required
     + Non negative Integer
     + less or equal to 26
 + Message
@@ -67,7 +69,9 @@ Requirerd payload in JSON format:
 
 #### Assumption
 
-+ Non-letter are retained.
++ Spaces are retained.
+
++ Symbol and number cannot be encoded
 
 + Message cannot be encoded if shifting letter goes beyond letter z;
 

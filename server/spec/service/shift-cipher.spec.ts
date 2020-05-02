@@ -31,6 +31,8 @@ describe("shift-cipher Service", () => {
     it("Should throw when character is not in the alphabet", function() {
       expect( () => service.shiftCharacter('a', 27) ).toThrow(new Error('Unable to encode character'));
       expect( () => service.shiftCharacter('A', 27) ).toThrow(new Error('Unable to encode character'));
+      expect( () => service.shiftCharacter('!', 27) ).toThrow(new Error('Unable to encode character'));
+      expect( () => service.shiftCharacter('-', 27) ).toThrow(new Error('Unable to encode character'));
     });
   });
   
@@ -59,9 +61,8 @@ describe("shift-cipher Service", () => {
       expect(actual).toBe('vjg gcing jcu ncpfgf');
     });
 
-    it("Should retain non alphabet", function() {
-      const actual = service.shiftMessage('arn\'t we the same?', 2);
-      expect(actual).toBe('ctp\'v yg vjg ucog?');
+    it("Should throw on non alphabet message", function() {
+      expect( () => service.shiftMessage('arn\'t we the same?', 2) ).toThrow(new Error('Unable to encode character'));
     });
   });
 });
