@@ -1,149 +1,151 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, cleanup } from '@testing-library/react';
 import App from './App';
 
-test('should display error when username is > 15 characters', () => {
-  const { getByTestId } = render(<App />);
-  let container = getByTestId("username");
-  let input = container.querySelector('input'); 
+const enterValueToTextField = (container, val) => {
 
-  fireEvent.blur(input, {target: {value: '12345678901234567890'}});
-  let p = container.querySelector('p');
-  expect(p.innerHTML).toBe('Username is should be &lt;= 15 characters.')
-});
-
-test('should display error when email is invalid', () => {
-  const { getByTestId } = render(<App />);
-  let container = getByTestId("email");
-  let input = container.querySelector('input'); 
-
-  fireEvent.blur(input, {target: {value: '1'}});
-  let p = container.querySelector('p'); 
-  expect(p.innerHTML).toBe('Please enter a valid email.');
-});
-
-test('should display error when password is invalid', () => {
-  const { getByTestId } = render(<App />);
-  let container = getByTestId("password");
-  let input = container.querySelector('input'); 
-
-  fireEvent.blur(input, {target: {value: ''}});
-  let p = container.querySelector('p'); 
-  expect(p.innerHTML).toBe('Please enter a password.');
-});
-
-test('should display error when password does not match confirm password', () => {
-  const { getByTestId } = render(<App />);
-  let container1 = getByTestId("confirm-password");
-  let input1 = container1.querySelector('input'); 
-
-  let container2 = getByTestId("password");
-  let input2 = container2.querySelector('input'); 
-
-  fireEvent.blur(input1, {target: {value: '1'}});
-  fireEvent.blur(input2, {target: {value: '2'}});
-  let p = container1.querySelector('p'); 
-  expect(p.innerHTML).toBe('This password doesn’t match. Try again.');
-});
-
-test('should display error when password changed after valid matching', () => {
-  const { getByTestId } = render(<App />);
-  let container1 = getByTestId("confirm-password");
-  let input1 = container1.querySelector('input'); 
-
-  let container2 = getByTestId("password");
-  let input2 = container2.querySelector('input'); 
-
-  fireEvent.blur(input1, {target: {value: '1'}});
-  fireEvent.blur(input2, {target: {value: '1'}});
-  fireEvent.blur(input2, {target: {value: '2'}});
-  let p = container1.querySelector('p'); 
-  expect(p.innerHTML).toBe('This password doesn’t match. Try again.');
-});
-
-test('should disable submit button by default', () => {
-  const { getByTestId } = render(<App />);
-  let button = getByTestId("submit");
-  expect(button).toBeDisabled();
-});
-
-const enterValueToInput = (container, val) => {
-  const input = container.querySelector('input'); 
-  fireEvent.blur(input, {target: {value: val }});
+    let input = container.querySelector('input'); 
+    fireEvent.blur(input, {target: {value: val}});
 }
 
-test('should disable submit button when username is invalid', () => {
-  const { getByTestId } = render(<App />);
+describe("Register", () => {
+  
+  let component;
 
-  const usernameContainer = getByTestId("username");
-  enterValueToInput(usernameContainer, '12345678901234567890');
+  describe("Input Field", () => {
 
-  const emailContainer = getByTestId("email");
-  enterValueToInput(emailContainer, 'a@e.com');
+    beforeEach( () => {
 
-  const passwordContainer = getByTestId("password");
-  enterValueToInput(passwordContainer, 'asdf');
+      component = render(<App />);
+    });
 
-  const cpasswordContainer = getByTestId("confirm-password");
-  enterValueToInput(cpasswordContainer, 'asdf');
+    test('should display error when username is > 15 characters', () => {
 
-  const button = getByTestId("submit");
-  expect(button).toBeDisabled();
-});
+      let container = component.getByTestId("username");
 
-test('should disable submit button when email is invalid', () => {
-  const { getByTestId } = render(<App />);
+      enterValueToTextField(container, '12345678901234567890');
 
-  const usernameContainer = getByTestId("username");
-  enterValueToInput(usernameContainer, '12347890');
+      let p = container.querySelector('p');
 
-  const emailContainer = getByTestId("email");
-  enterValueToInput(emailContainer, 'a@e');
+      expect(p.innerHTML).toBe('Username must be less than 16 characters.')
+    });
 
-  const passwordContainer = getByTestId("password");
-  enterValueToInput(passwordContainer, 'asdf');
+    test('should display error when email is invalid', () => {
 
-  const cpasswordContainer = getByTestId("confirm-password");
-  enterValueToInput(cpasswordContainer, 'asdf');
+      let container = component.getByTestId("email");
 
-  const button = getByTestId("submit");
-  expect(button).toBeDisabled();
-});
+      enterValueToTextField(container, '1'); 
 
-test('should disable submit button when password is invalid', () => {
-  const { getByTestId } = render(<App />);
+      let p = container.querySelector('p'); 
 
-  const usernameContainer = getByTestId("username");
-  enterValueToInput(usernameContainer, '12347890');
+      expect(p.innerHTML).toBe('Please enter a valid email.');
+    });
 
-  const emailContainer = getByTestId("email");
-  enterValueToInput(emailContainer, 'a@e');
+    test('should display error when password is invalid', () => {
 
-  const passwordContainer = getByTestId("password");
-  enterValueToInput(passwordContainer, '');
+      let container = component.getByTestId("password");
 
-  const cpasswordContainer = getByTestId("confirm-password");
-  enterValueToInput(cpasswordContainer, 'asdf');
+      enterValueToTextField(container, ''); 
 
-  const button = getByTestId("submit");
-  expect(button).toBeDisabled();
-});
+      let p = container.querySelector('p'); 
 
-test('should enable submit button when form is valid', () => {
-  const { getByTestId } = render(<App />);
+      expect(p.innerHTML).toBe('Please enter a password.');
+    });
 
-  const usernameContainer = getByTestId("username");
-  enterValueToInput(usernameContainer, '12347890');
+    test('should display error when password does not match confirm password', () => {
 
-  const emailContainer = getByTestId("email");
-  enterValueToInput(emailContainer, 'a@e.com');
+      let container1 = component.getByTestId("confirm-password");
+      let container2 = component.getByTestId("password");
 
-  const passwordContainer = getByTestId("password");
-  enterValueToInput(passwordContainer, 'asdf');
+      enterValueToTextField(container1, '1'); 
+      enterValueToTextField(container2, '2'); 
 
-  const cpasswordContainer = getByTestId("confirm-password");
-  enterValueToInput(cpasswordContainer, 'asdf');
+      let p = container1.querySelector('p'); 
 
-  const button = getByTestId("submit");
-  expect(button).not.toBeDisabled();
+      expect(p.innerHTML).toBe('This password doesn’t match. Try again.');
+    });
+
+    test('should display error when password changed after valid matching', () => {
+
+      let container1 = component.getByTestId("confirm-password");
+      let container2 = component.getByTestId("password");
+
+      enterValueToTextField(container1, '2'); 
+      enterValueToTextField(container2, '2'); 
+      enterValueToTextField(container1, '1'); 
+
+      let p = container1.querySelector('p'); 
+
+      expect(p.innerHTML).toBe('This password doesn’t match. Try again.');
+    });
+  });
+
+  describe("Submit button", () => {
+
+    beforeEach( () => {
+
+      component = render(<App />);
+
+      const usernameContainer = component.getByTestId("username");
+      const emailContainer = component.getByTestId("email");
+      const passwordContainer = component.getByTestId("password");
+      const cpasswordContainer = component.getByTestId("confirm-password");
+
+      enterValueToTextField(usernameContainer, '127890');
+      enterValueToTextField(emailContainer, 'a@e.com');
+      enterValueToTextField(passwordContainer, 'asdf');
+      enterValueToTextField(cpasswordContainer, 'asdf');
+
+    });
+
+    test('should disable submit button by default', () => {
+      cleanup();
+      component = render(<App />);
+
+      const button = component.getByTestId("submit");
+
+      expect(button).toBeDisabled();
+    });
+
+
+    test('should disable submit button when username is invalid', () => {
+
+      const usernameContainer = component.getByTestId("username");
+
+      enterValueToTextField(usernameContainer, '12345678901234567890');
+
+      const button = component.getByTestId("submit");
+
+      expect(button).toBeDisabled();
+    });
+
+    test('should disable submit button when email is invalid', () => {
+
+      const emailContainer = component.getByTestId("email");
+
+      enterValueToTextField(emailContainer, 'a@e');
+
+      const button = component.getByTestId("submit");
+
+      expect(button).toBeDisabled();
+    });
+
+    test('should disable submit button when password is invalid', () => {
+
+      const passwordContainer = component.getByTestId("password");
+      
+      enterValueToTextField(passwordContainer, '');
+
+      const button = component.getByTestId("submit");
+
+      expect(button).toBeDisabled();
+    });
+
+    test('should enable submit button when form is valid', () => {
+
+      const button = component.getByTestId("submit");
+
+      expect(button).not.toBeDisabled();
+    });
+  });
 });

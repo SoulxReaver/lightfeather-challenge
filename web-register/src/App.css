@@ -17,3 +17,7 @@
 .MuiTextField-root {
   width: 300px!important;
 }
+
+.create-button {
+  width: 300px;
+}

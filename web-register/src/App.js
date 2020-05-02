@@ -7,69 +7,85 @@ import * as EmailValidator from 'email-validator';
 import Container from '@material-ui/core/Container';
 
 const App = () => {
-  const [ username, setUsername ] = React.useState({isValid: false, value: '', errorMessage: false});
-  const [ email, setEmail ] = React.useState({isValid: false, value: '', errorMessage: false});
-  const [ password, setPassword ] = React.useState({isValid: false, value: '', errorMessage: false});
-  const [ confirmPassword, setConfirmPassword ] = React.useState({isValid: false, value: '', errorMessage: false});
+  const [ inputs, setInputs ] = React.useState({ username: '', email: '', password: '', confirmPassword: ''});
+  const [ errors, setErrors ] = React.useState({ username: null, email: null, password: null, confirmPassword: null});
   const [ disableSubmit, setDisableSubmit ] = React.useState(false);
 
-  const validateUsername = (event) => {
-    if (event.target.value === '') {
-      return setUsername({isValid: false, value: '', errorMessage: false});
-    };
+  const validate = (event) => {
+    const { name, value } = event.target;
+    const error = {};
+    const input = {};
 
-    if (event.target.value.length > 15) {
-      return setUsername({isValid: false, value: event.target.value, errorMessage: 'Username is should be <= 15 characters.'});
+    switch (name) {
+      case 'username': 
+        error.username = 
+          value.length > 15
+            ? 'Username must be less than 16 characters.'
+            : null;
+          input.username = value;
+        break;
+      case 'email': 
+        error.email = 
+          EmailValidator.validate(value)
+            ? null
+            : 'Please enter a valid email.';
+        input.email = value;
+        break;
+      case 'password': 
+        error.password = 
+          value.length > 0
+            ? null
+            : 'Please enter a password.';
+        if (inputs.confirmPassword.length > 0) {
+          error.confirmPassword = 
+          inputs.confirmPassword !== value
+            ? 'This password doesn’t match. Try again.'
+            : null;
+        }
+        input.password = value;
+        break;
+      case 'confirm-password': 
+        error.confirmPassword = 
+        value !== inputs.password
+            ? 'This password doesn’t match. Try again.'
+            : null;
+        input.confirmPassword = value;
+        break;
+      default:
+        break;
     }
 
-    return setUsername({isValid: true, value: event.target.value, errorMessage: false});
-  }
-
-  const validateEmail = (event) => {
-
-    if (event.target.value === '') {
-      return setEmail({isValid: false, value: '', errorMessage: false});
-    };
-
-    if (!EmailValidator.validate(event.target.value)) {
-      return setEmail({isValid: false, value: event.target.value, errorMessage: 'Please enter a valid email.'});
-    }
-
-    setEmail({isValid: true, value: event.target.value, errorMessage: false});
-  }
-
-  const validatePassword = (event) => {
-    
-    if (event.target.value === '') {
-      return setPassword({isValid: false, value: event.target.value, errorMessage: 'Please enter a password.'});
-    };
-
-    setPassword({isValid: true, value: event.target.value, errorMessage: false});
-
-    if (confirmPassword.value !== '') {
-      validateConfirmPassword({  target: { value: confirmPassword.value }}, event.target.value);
-    }
-  }
-
-  const validateConfirmPassword = (event, p = password.value) => {
-    let errorMessage;
-    if (event.target.value === '') {
-      return setConfirmPassword({isValid: false, value: event.target.value, errorMessage: false});
-    }
-
-    if (event.target.value !== p) {
-      return setConfirmPassword({isValid: false, value: event.target.value, errorMessage: 'This password doesn’t match. Try again.'});
-    }
-
-    return setConfirmPassword({isValid: true, value: event.target.value, errorMessage});
+    setInputs(prevState => { return {...prevState, ...input} });
+    return setErrors(prevState => { return {...prevState, ...error} });
   }
 
   React.useEffect( () => {
-    setDisableSubmit(!(username.isValid && 
-      email.isValid &&
-      password.isValid &&
-      confirmPassword.isValid));
-  }, [username.isValid, email.isValid, password.isValid, confirmPassword.isValid]);
+    const isAllFieldFilled = () => {
+      return inputs.username.length > 0 &&
+        inputs.email.length > 0 &&
+        inputs.password.length > 0 &&
+        inputs.confirmPassword.length > 0;
+    }
+  
+    const isForumValid = () => {
+      return !(errors.username ||
+        errors.email ||
+        errors.password ||
+        errors.confirmPassword);
+    }
+
+    setDisableSubmit(!(isAllFieldFilled() && isForumValid()));
+  }, [
+    inputs.username.length, 
+    inputs.email.length, 
+    inputs.password.length, 
+    inputs.confirmPassword.length, 
+    errors.username, 
+    errors.email, 
+    errors.password, 
+    errors.confirmPassword
+  ]);
+
 
   return (
     <Container className="app-container" maxWidth="md">
@@ -79,51 +95,51 @@ const App = () => {
         <form className="form-container"  autoComplete="off">
           <Box mt={3}>
             <TextField
-              id="username" 
+              name="username" 
               data-testid="username"
-              error={!!username.errorMessage} 
+              error={!!errors.username} 
               type="text" 
               label="Username" 
               variant="outlined" 
-              onBlur={validateUsername} 
-              helperText={username.errorMessage}
+              onBlur={validate} 
+              helperText={errors.username}
             />
           </Box>
           <Box mt={3}>
             <TextField 
-              id="email" 
+              name="email" 
               data-testid="email"
-              error={!!email.errorMessage} 
+              error={!!errors.email} 
               type="email" 
               label="Email" 
               variant="outlined" 
-              onBlur={validateEmail}
-              helperText={email.errorMessage} />
+              onBlur={validate}
+              helperText={errors.email} />
           </Box>
           <Box mt={3}>
             <TextField 
-              id="password" 
+              name="password" 
               data-testid="password"
-              error={!!password.errorMessage} 
+              error={!!errors.password} 
               type="password" 
               label="Password" 
               variant="outlined" 
-              onBlur={validatePassword}
-              helperText={password.errorMessage} />
+              onBlur={validate}
+              helperText={errors.password} />
           </Box>
           <Box mt={3}>
             <TextField 
-              id="confirm-password" 
+              name="confirm-password" 
               data-testid="confirm-password"
-              error={!!confirmPassword.errorMessage} 
+              error={!!errors.confirmPassword} 
               type="password" 
               label="Confirm Password" 
               variant="outlined" 
-              onBlur={validateConfirmPassword} 
-              helperText={confirmPassword.errorMessage}/>
+              onBlur={validate} 
+              helperText={errors.confirmPassword}/>
           </Box>
           <Box mt={3}>
-            <Button variant="contained" data-testid="submit" color="primary" disabled={disableSubmit}>Create account</Button>
+            <Button className="create-button" variant="contained" data-testid="submit" color="primary" disabled={disableSubmit}>Create account</Button>
           </Box>
         </form>
     </Container>
